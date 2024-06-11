@@ -22,9 +22,19 @@ jobs:
         command: gradle test
         timeout: 10
         max-score: 5
+    - name: Full feature test
+      id: full-feature-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Full feature test
+        setup-command: ''
+        command: gradle test
+        timeout: 10
+        max-score: 100
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
         HELLOTEST_RESULTS: "${{steps.hellotest.outputs.result}}"
+        FULL-FEATURE-TEST_RESULTS: "${{steps.full-feature-test.outputs.result}}"
       with:
-        runners: hellotest
+        runners: hellotest,full-feature-test
